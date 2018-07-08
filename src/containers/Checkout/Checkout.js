@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+import { Route } from 'react-router-dom';
+import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
   state = {
-    ingredients: null
+    ingredients: null,
+    totalPrice: 0
   }
 
   componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     const updatedIngredients = {};
+    let price = 0;
     for (let entry of query.entries()) {
+      if (entry[0] === 'price') {
+        price = +entry[1];
+        continue;
+      }
       updatedIngredients[entry[0]] = +entry[1];
     }
     this.setState({
-      ingredients: updatedIngredients
+      ingredients: updatedIngredients,
+      totalPrice: price
     });
   }
 
@@ -38,6 +47,11 @@ class Checkout extends Component {
     return (
       <div>
         {checkoutSummary}
+        <Route path={this.props.match.path + '/contact-data'}
+          render={(props) => (<ContactData
+            ingredients={this.state.ingredients}
+            price={this.state.totalPrice}
+            {...props} />)} />
       </div>
     );
   }
