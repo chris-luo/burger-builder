@@ -19,9 +19,9 @@ import * as actionTypes from '../../store/actions/burgerBuilder';
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: null,
-    totalPrice: 4,
-    purchasable: false,
+    // ingredients: null,
+    // totalPrice: 4,
+    // purchasable: false,
     purchasing: false,
     loading: false,
     error: false
@@ -36,15 +36,15 @@ class BurgerBuilder extends Component {
       .catch(error => this.setState({ error: true }));
   }
 
-  updatePurchaseState = (ingredients) => {
-    const sum = Object.keys(ingredients)
-      .map(igKey => ingredients[igKey])
-      .reduce((sum, el) => sum + el, 0)
+  // updatePurchaseState = (ingredients) => {
+  //   const sum = Object.keys(ingredients)
+  //     .map(igKey => ingredients[igKey])
+  //     .reduce((sum, el) => sum + el, 0)
 
-    this.setState({
-      purchasable: sum > 0
-    })
-  }
+  //   this.setState({
+  //     purchasable: sum > 0
+  //   })
+  // }
 
   // addIngredientHandler = (type) => {
   //   const oldCount = this.state.ingredients[type];
