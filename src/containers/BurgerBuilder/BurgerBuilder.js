@@ -96,15 +96,16 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    let queryString = Object.keys(this.props.ingredients)
-      .map(key =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(this.props.ingredients[key])}`)
-      .join('&');
-    queryString += `&price=${this.props.totalPrice}`;
-    this.props.history.push({
-      pathname: '/checkout',
-      search: `?${queryString}`
-    });
+    // let queryString = Object.keys(this.props.ingredients)
+    //   .map(key =>
+    //     `${encodeURIComponent(key)}=${encodeURIComponent(this.props.ingredients[key])}`)
+    //   .join('&');
+    // queryString += `&price=${this.props.totalPrice}`;
+    // this.props.history.push({
+    //   pathname: '/checkout',
+    //   search: `?${queryString}`
+    // });
+    this.props.history.push('/checkout');
   }
 
   render() {
@@ -155,11 +156,14 @@ class BurgerBuilder extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ingredients: state.ingredients,
-  totalPrice: state.totalPrice,
-  purchasable: state.purchasable
-});
+const mapStateToProps = state => {
+  console.log(state);
+  return ({
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    purchasable: state.burgerBuilder.purchasable
+  })
+};
 
 const mapDispatchToProps = dispatch => ({
   onSetIngredients: (ingredients) => dispatch({ type: actionTypes.SET_INGREDIENTS, ingredients: ingredients }),

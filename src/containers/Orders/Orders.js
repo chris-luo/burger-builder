@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Order from '../../components/Order/Order';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
+import * as ordersAction from '../../store/actions/orders';
 
 class Orders extends Component {
   state = {
-    orders: [],
+    // orders: [],
     loading: true
   }
 
@@ -20,9 +22,10 @@ class Orders extends Component {
           });
         }
         console.log(fetchedOrders);
+        this.props.onSetOrders(fetchedOrders)
         this.setState({
           loading: false,
-          orders: fetchedOrders
+          // orders: fetchedOrders
         })
       })
       .catch(error => {
@@ -33,7 +36,8 @@ class Orders extends Component {
   }
 
   render() {
-    let orders = this.state.orders.map(order => (
+    console.log(this.props);
+    let orders = this.props.orders.map(order => (
       <Order key={order.id}
         ingredients={order.ingredients}
         price={order.price} />
@@ -48,4 +52,12 @@ class Orders extends Component {
   }
 }
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = state => ({
+  orders: state.orders.orders
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSetOrders: (orders) => dispatch({ type: ordersAction.SET_ORDERS, orders: orders })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
