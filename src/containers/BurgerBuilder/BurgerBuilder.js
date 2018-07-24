@@ -57,7 +57,6 @@ class BurgerBuilder extends Component {
   }
 
   render() {
-    console.log(this.props);
 
     const disabledInfo = {
       ...this.props.ingredients
@@ -102,7 +101,6 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return ({
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
